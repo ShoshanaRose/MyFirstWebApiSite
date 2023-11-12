@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="login.js"></script>
+    <link rel="stylesheet" href="Style.css"/>
+</head>
+<body dir="rtl">
+    <div>
+        <label>שם משתמש</label> <input type="text" id="username" /><br /><br />
+        <label>סיסמא</label> <input type="password" id="password" /><br /><br />
+        <button onclick="login()">התחברות</button>
+        <a onclick="newU()">  ---משתמש חדש---  </a> 
+    </div>
+
+    <br /><br /><br />
+    
+    <div id="register" >
+        <label>שם משתמש</label> <input type="text" id="username2" /><br /><br />
+        <label>סיסמא</label> <input type="password" id="password2" /><button onclick="checkStrong()">בדיקת חוזק הסיסמא</button>
+                <progress id="progress" value="0" max="4"></progress><div id="value"></div><br /><br />
+        <label>שם פרטי</label> <input type="text" id="firstname" /><br /><br />
+        <label>שם משפחה</label> <input type="text" id="lastname" /><br /><br />
+        <button onclick="register()">רישום</button>
+    </div>
+</body>
+</html>

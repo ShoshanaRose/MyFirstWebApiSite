@@ -1,0 +1,24 @@
+﻿body {
+    /*background-image: url('1 .jpg');*/
+    /*background-image: url('1 [converted]-03.jpg');*/
+    
+    /*background-image: url('633869228371559490_1.jpg');*/
+    background-size: 70%;
+    background-position:center;
+    background-repeat:no-repeat;
+}
+form{
+    /*background-color:lightcoral;*/
+    /*width:500px*/
+    
+}
+
+#register {
+    visibility:hidden;
+}
+#update{
+    visibility:hidden;
+}
+a{
+    color:blue;
+}

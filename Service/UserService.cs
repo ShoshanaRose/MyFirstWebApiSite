@@ -6,8 +6,11 @@ namespace Service
     public class UserService:IUserService
     {
         private IUserRepository _userRepository ;
-        //userRepository userRepository = new userRepository();
-        
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
         public async Task<User> getUserByUserNameAndPass(string userName, int pass)
         {
             return await _userRepository.getUserByUserNameAndPass(userName, pass);
@@ -18,21 +21,14 @@ namespace Service
             return await _userRepository.getUserById(id);
         }
 
-        public User addUser(User user)
+        public async Task<User> addUser(User user)
         {
-            //int res = checkStrongePassword(user.Password);
-            //if (res >= 2)
-            //    return userRepository.addUser(user);
-            //else
-            return null;
+            return await _userRepository.addUser(user);
         }
 
         public async Task<User> update(int id, User userTUpdate)
         {
-            //int res = checkStrongePassword(userTUpdate.Password);
-            //if(res>=2)
-            //    return await userRepository.update(id, userTUpdate);
-           return null;
+            return await _userRepository.update(id, userTUpdate);
         }
 
         public int checkStrongePassword(string pass)

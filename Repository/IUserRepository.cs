@@ -11,9 +11,7 @@ namespace Repository
     {
         Task<User> getUserByUserNameAndPass(string UserName, int Password);
         Task<User> getUserById(int id);
-        User addUser(User user);
-        Task<User> update(int id, User userTUpdate);
-
-
+        Task<User> addUser(User user);
+        Task<User> update(int id, User userToUpdate);
     }
 }

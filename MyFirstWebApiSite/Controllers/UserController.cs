@@ -26,7 +26,6 @@ namespace MyFirstWebApiSite.Controllers
             if (user == null)
                 return NoContent();
             return Ok(user);
-
         }
 
         // GET api/<UserController>/5
@@ -41,11 +40,11 @@ namespace MyFirstWebApiSite.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public ActionResult Post([FromBody] User user)
+        public async Task<ActionResult> Post([FromBody] User user)
         {
             try
             {
-                User newUser = _userService.addUser(user);
+                User newUser = await _userService.addUser(user);
                 if (newUser == null)
                     return BadRequest();
                 return Ok(newUser);

@@ -11,7 +11,7 @@ namespace Service
     {
         Task<User> getUserByUserNameAndPass(string userName, int pass);
         Task<User> getUserById(int id);
-        User addUser(User user);
+        Task<User> addUser(User user);
         Task<User> update(int id, User userTUpdate);
         int checkStrongePassword(string pass);
     }

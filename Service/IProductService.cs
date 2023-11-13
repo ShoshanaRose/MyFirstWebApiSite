@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities;
 
-namespace Repository
+namespace Service
 {
-    public interface IOrderRepository
+    public interface IProductService
     {
-        Task<Order> createNewOrder(Order order);
+        Task<List<Product>> getAllProducts();
     }
 }

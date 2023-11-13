@@ -8,6 +8,10 @@ const viewUpdate = () => {
     view.style.visibility = "initial";
 }
 
+const viewProduct = () => {
+    window.location.href = "Products.html"
+}
+
 const login = async () => {
     try {
         const UserName = document.getElementById("username").value

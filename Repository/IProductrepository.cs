@@ -7,8 +7,8 @@ using Entities;
 
 namespace Repository
 {
-    public interface IOrderRepository
+    public interface IProductrepository
     {
-        Task<Order> createNewOrder(Order order);
+        Task<List<Product>> getAllProducts();
     }
 }

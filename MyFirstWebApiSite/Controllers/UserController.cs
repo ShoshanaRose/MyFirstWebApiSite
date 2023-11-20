@@ -20,12 +20,13 @@ namespace MyFirstWebApiSite.Controllers
 
         // GET: api/<UserController>
         [HttpGet]
-        public async Task<ActionResult> Get( [FromQuery] string userName, [FromQuery] int Password)
+        public async Task<User> Get( [FromQuery] string UserName, [FromQuery] int Password)
         {
-            User user = await _userService.getUserByUserNameAndPass(userName, Password);
-            if (user == null)
-                return NoContent();
-            return Ok(user);
+            //User user = await _userService.getUserByUserNameAndPass(userName, Password);
+            //if (user == null)
+            //    return NoContent();
+            //return Ok(user);
+            return await _userService.getUserByUserNameAndPass(UserName, Password);
         }
 
         // GET api/<UserController>/5
@@ -67,19 +68,27 @@ namespace MyFirstWebApiSite.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] User userToUpdate)
+        public async Task Put(int id, [FromBody] User userToUpdate)
         {
             try
             {
-                User userUpdated = await _userService.update(id, userToUpdate);
-                if (userToUpdate == null)
-                    return BadRequest();
-                return Ok(userUpdated);
+                //User userUpdated = 
+                    await _userService.update(id, userToUpdate);
+                //if (userToUpdate == null)
+                //    return BadRequest();
+                //return Ok(userUpdated);
                 //return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
             }
             catch (Exception e){
                 throw e;
             }
+        }
+
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+
         }
     }
 }

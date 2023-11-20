@@ -5,6 +5,8 @@ using Service;
 
 namespace MyFirstWebApiSite.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class OrderController : Controller
     {
         IOrderService _orderService;

@@ -102,7 +102,8 @@ const checkStrong = async () => {
 
 const update = async () => {
     const user = {
-        UserName: document.getElementById("username3").value,
+        UserId: 0, 
+        Email: document.getElementById("username3").value,
         Password: document.getElementById("password3").value,
         Firstname: document.getElementById("firstname3").value,
         Lastname: document.getElementById("lastname3").value
@@ -110,20 +111,67 @@ const update = async () => {
     //checkStrong();
     try {
         const userJson = sessionStorage.getItem("user")
-        const id = JSON.parse(userJson).userId;            
-        const res = await fetch(`api/User/${id}`, {
+        user.UserId = JSON.parse(userJson).userId;
+        console.log(user.UserId)
+        /*const id = JSON.parse(userJson).UserId;*/
+        const res = await fetch(`api/User/${user.UserId}`, {
             method: 'PUT',
             Headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(user)
         })
+        console.log(res)
         if (res.status==400)
             alert("משהו השתבש, נסה שנית")
         else {
+            
+            sessionStorage.setItem("user", JSON.stringify(user))
+            let userString = sessionStorage.getItem("user")
+            let cu = JSON.parse(userString)
+
+            alert(`user ${cu.userName} was updated`)
+            
             alert(" הפרטים עודכנו בהצלחה")
+            window.location.href = './home.html';
+
+
         }
     }
+
+    //const user = {
+    //    UserId: 0,
+    //    Email: document.getElementById("userNameRegister").value,
+    //    Password: document.getElementById("passwordRegister").value,
+    //    FirstName: document.getElementById("FirstName").value,
+    //    LastName: document.getElementById("LastName").value
+    //}
+
+    //const checkIfStrong = await checkStrongPassword()
+
+    //if (!checkIfStrong) {
+    //    return alert("Please enter strong password!");
+    //}
+
+    //try {
+    //    const userJson = sessionStorage.getItem("user")
+    //    console.log(userJson);
+    //    const id = JSON.parse(userJson).userId
+    //    user.UserId = id;
+    //    const res = await fetch(`api/User/${id}`,
+    //        {
+    //            method: 'PUT',
+    //            headers: { 'Content-Type': `application/json` },
+    //            body: JSON.stringify(user)
+    //        })
+    //    if (!res.ok)
+    //        alert("error updated to the server,please try again!")
+    //    else {
+
+    //        alert(`user ${id} updated succfully`)
+    //    }
+
+    //}
     catch (e) {
-        alert("?????????????");
+        alert("catch");
         console.log(e)
     }
 }

@@ -16,10 +16,19 @@ namespace MyFirstWebApiSite.Controllers
         }
 
         // POST: OrderController/Create
-        [HttpPost]     
-        public async Task<Order> Create(Order order)
+        [HttpPost]
+        public async Task<ActionResult<Order>> Post([FromBody] Order order)
         {
             return await _orderService.createNewOrder(order);
+            //try {
+            //    Order newOrder = await _orderService.createNewOrder(order);
+            //    if (newOrder == null)
+            //        return BadRequest();
+            //    return CreatedAtAction(nameof(Get), new { id = order.OrderId }, newOrder);
+            //}
+            //catch(Exception e){
+            //    throw e;
+            //}
         }
     }
 }

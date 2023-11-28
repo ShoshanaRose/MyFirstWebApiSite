@@ -1,6 +1,11 @@
-var products = [];
+const products = [];
+let cart = [];
 
-const getProduct = async (name, minPrice, maxPrice, checkedCategory) => {    
+const getProduct = async (name, minPrice, maxPrice, checkedCategory) => {   
+    cart=JSON.parse(sessionStorage.getItem("cart"))
+    if (cart != null) {
+        sessionStorage.setItem("cart", JSON.stringify(cart))
+    }
     try {
         let url = `https://localhost:44392/api/Product`;
         if (name || minPrice || maxPrice || checkedCategory) url += `?`
@@ -12,15 +17,12 @@ const getProduct = async (name, minPrice, maxPrice, checkedCategory) => {
                 url += `&categoryIds=${checkedCategory[i]}`
             }               
         }
-        console.log(url)
         const res = await fetch(url)
         if (res.status == 400)
-            return alert("error in connecrion DB");
+            return alert("error in connection DB");
         if (res.status == 204)
-            return alert("no product");
-        
+            return alert("no product");       
         product = await res.json();
-        //console.log(product)
         return product;
     }
     catch (er) {
@@ -54,6 +56,8 @@ const ShowProduct = async (name, minPrice, maxPrice, checkedCategory) => {
         clone.querySelector("h1").innerText = product[i].productName;
         clone.querySelector("p.price").innerText = product[i].price;
         clone.querySelector("p.description").innerText = product[i].description;
+        let btn = clone.querySelector("button");
+        btn.addEventListener('click', () => { addToCart(product[i]) });
         document.getElementById("ProductList").appendChild(clone);
     }
 }
@@ -69,37 +73,29 @@ const ShowCategory = async () => {
         clone.querySelector("label").for = category[i].categoryName;
         document.getElementById("categoryList").appendChild(clone);
     }
-
-    /*
-    let tmp = document.getElementById("temp-category");
-    */
 }
 
 ShowProduct();
 ShowCategory();
 
-const filterProducts = async () => {   
+const filterProducts = async () => {  
     let minPrice = document.getElementById("minPrice").value
     let maxPrice = document.getElementById("maxPrice").value
     let name = document.getElementById("nameSearch").value
-    let category = document.querySelector(".opt");
-    console.log(category)
+    let category = document.querySelectorAll(".opt");
     const checkedCategory = [];
     for (let i = 0; i < category.length; i++) {
-        console.log(category[i], "!!!!!!!!!!!!!!!!")
         if (category[i].checked)
-            checkedCategory.push(category[i])
+            checkedCategory.push(category[i].id)
     }
     document.getElementById("ProductList").replaceChildren([])
     products = await ShowProduct(name, minPrice, maxPrice, checkedCategory)  
 }
 
-
-const addToCart = async (product) => { 
-    const res = await fetch(`api/Order}`, {
-        method: 'POST',
-        Headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(product)
-    })
-    const res2 = res.json();
+let numOfProduct = 0;
+const addToCart = (product) => {
+    cart.push(product)
+    sessionStorage.setItem(`cart`, JSON.stringify(cart));
+    //sessionStorage.setItem(`product${numOfProduct}`, JSON.stringify(product));
+    numOfProduct++;
 }

@@ -1,4 +1,4 @@
-﻿html, body {
+﻿shtml, body {
     direction: rtl;
     margin: 0;
     padding: 0;
@@ -94,15 +94,18 @@ td {
 #title {
     margin: 8px 0 12px;
     padding-left: 15px;
+    text-align:center
 }
 
     #title h1 {
         margin: 15px 0 2px 0;
         font-family: 'azo-sans', sans-serif;
-        font-size: 18px;
+        font-size: 30px;
         font-weight: 300;
         line-height: 100%;
         float: right;
+        text-align:center;
+
     }
 
 h1 {
@@ -134,6 +137,9 @@ a.GoToCheckout.TopLink {
     font-size: 11px;
 }
 
+.img-w {
+    height: 300px;
+}
 .nxbtn.primary, .nxbtn.secondary {
     padding-top: 6px;
     padding-bottom: 7px;

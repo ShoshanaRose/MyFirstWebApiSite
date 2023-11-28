@@ -14,7 +14,7 @@
             <h1></h1>
             <p class="price"></p>
             <p class="description"></p>
-            <p><button onclick="addToCart()">הוסף לסל</button></p>
+            <p><button>הוסף לסל</button></p>
         </div>
     </template>
     <template id="temp-category">
@@ -28,7 +28,7 @@
         </div>
     </template>
 </head>
-<body>
+<body onload="ShowProduct()">
     <header>
         <div class="bar">
             <section class="QuickLinks">
@@ -52,14 +52,11 @@
                             <span id="ItemsCountText">0</span>
                         </div>
                     </div>
-
                 </a>
             </span>
             <div class="Checkout ">
                 <a class="goToCart" href="ShoppingBag.html">לקופה</a>
             </div>
-
-
         </div>
     </header>
 

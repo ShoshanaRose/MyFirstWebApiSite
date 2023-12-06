@@ -44,16 +44,13 @@ const getCategory = async () => {
 const ShowProduct = async (name, minPrice, maxPrice, checkedCategory) => {
     const product = await getProduct(name, minPrice, maxPrice, checkedCategory)
     let cartSession = JSON.parse(sessionStorage.getItem("cart"));
-    //if (cartSession != null) {
-    //    console.log("cartSession", cartSession);
-    //    document.getElementById("ItemsCountText").innerHTML++;
-    //    for (let c = 0; c < cartSession.length; c++) {
-            
-    //        //cart.push(cartSession[c]);
-    //    }
-    //    console.log("cart", cart);
-    ////        sessionStorage.setItem("cart", JSON.stringify(cart))
-    //}
+    if (cartSession != null) {
+        sessionStorage.setItem("cart", [])
+        document.getElementById("ItemsCountText").innerHTML = cartSession.length;
+        for (let c = 0; c < cartSession.length; c++) {
+            cart.push(cartSession[c]);
+        }
+    }
     for (let i = 0; i < product.length; i++)
     {
         const tmp = document.querySelector("#temp-card");

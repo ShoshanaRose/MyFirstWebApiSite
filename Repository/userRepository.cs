@@ -1,7 +1,6 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
-using System.Text.Json;
+using MyFirstWebApiSite;
 
 namespace Repository
 {

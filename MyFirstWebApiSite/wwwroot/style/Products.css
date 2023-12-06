@@ -1,7 +1,7 @@
 ﻿html, body {
-    direction:rtl;
-    margin:0;
-    padding:0;
+    direction: rtl;
+    margin: 0;
+    padding: 0;
 }
 
 * {
@@ -9,12 +9,12 @@
     font-family: system-ui;
 }
 
-ul{
-    margin:0;
+ul {
+    margin: 0;
 }
 
-.floatRight{
-    float:right;
+.floatRight {
+    float: right;
 }
 
 .QuickLinks ul li a::after {
@@ -36,19 +36,20 @@ ul{
     margin: auto;
     text-align: center;
     font-family: arial;
-    padding:15px;
-    float:left;
-    height:550px;
-    margin:6px;
+    padding: 15px;
+    float: left;
+    height: 550px;
+    margin: 6px;
 }
 
-.img-w{
-    height:300px;
+.img-w {
+    height: 300px;
 }
 
-p.description{
-    height:65px;
+p.description {
+    height: 65px;
 }
+
 .bar::before {
     content: ' הכל לגינה';
     color: white;
@@ -60,6 +61,7 @@ p.description{
     left: 51%;
     font-family: Helvetica;
 }
+
 .price {
     color: grey;
     font-size: 22px;
@@ -77,9 +79,10 @@ p.description{
     font-size: 18px;
 }
 
-.card button:hover {
-    opacity: 0.7;
-}
+    .card button:hover {
+        opacity: 0.7;
+    }
+
 .bar {
     background-color: black;
     height: 35px;
@@ -108,6 +111,7 @@ p.description{
         font-size: 100%;
         margin-top: -1px;
     }
+
 .goToCart {
     background: #1a6461;
     font-size: 11px;
@@ -122,7 +126,7 @@ p.description{
     border-radius: 3px;
     display: inline-block;
     float: right;
-    margin:4px;
+    margin: 4px;
 }
 
 .addedToBagDialogue::before {
@@ -152,7 +156,7 @@ p.description{
 }
 
 .QuickLinks ul li {
-  float:left;
+    float: left;
 }
 
 
@@ -168,9 +172,9 @@ p.description{
     background-color: rgb(249, 249, 249);
     font-family: Arial;
     font-size: 14px;
-    min-height:100%;
-
+    min-height: 100%;
 }
+
 .nameFilter input {
     width: 70%;
     height: 24px;
@@ -192,8 +196,8 @@ p.description{
     border-radius: 3px;
     box-shadow: 0 1px 2px rgb(15 17 17 / 15%) inset;
     outline: 0;
-
 }
+
 .priceCurrency {
     position: absolute;
     margin-top: 6.5px;

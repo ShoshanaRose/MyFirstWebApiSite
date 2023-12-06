@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -21,6 +22,10 @@ namespace Repository
             await _myStore20234Context.Orders.AddAsync(order);
             await _myStore20234Context.SaveChangesAsync();
             return order;
+        }
+        public async Task<Order> getOrderById(int id)
+        {
+            return await _myStore20234Context.Orders.Where(o => o.OrderId == id).FirstOrDefaultAsync();
         }
     }
 }

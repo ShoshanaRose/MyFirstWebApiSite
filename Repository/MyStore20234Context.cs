@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository;
 
@@ -92,6 +92,11 @@ public partial class MyStore20234Context : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("DESCRIPTION");
+            entity.Property(e => e.Image)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("IMAGE");
             entity.Property(e => e.Price).HasColumnName("PRICE");
             entity.Property(e => e.ProductName)
                 .HasMaxLength(20)

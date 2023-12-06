@@ -1,11 +1,6 @@
-const products = [];
 let cart = [];
 
-const getProduct = async (name, minPrice, maxPrice, checkedCategory) => {   
-    cart=JSON.parse(sessionStorage.getItem("cart"))
-    if (cart != null) {
-        sessionStorage.setItem("cart", JSON.stringify(cart))
-    }
+const getProduct = async (name, minPrice, maxPrice, checkedCategory) => {     
     try {
         let url = `https://localhost:44392/api/Product`;
         if (name || minPrice || maxPrice || checkedCategory) url += `?`
@@ -48,6 +43,17 @@ const getCategory = async () => {
 
 const ShowProduct = async (name, minPrice, maxPrice, checkedCategory) => {
     const product = await getProduct(name, minPrice, maxPrice, checkedCategory)
+    let cartSession = JSON.parse(sessionStorage.getItem("cart"));
+    //if (cartSession != null) {
+    //    console.log("cartSession", cartSession);
+    //    document.getElementById("ItemsCountText").innerHTML++;
+    //    for (let c = 0; c < cartSession.length; c++) {
+            
+    //        //cart.push(cartSession[c]);
+    //    }
+    //    console.log("cart", cart);
+    ////        sessionStorage.setItem("cart", JSON.stringify(cart))
+    //}
     for (let i = 0; i < product.length; i++)
     {
         const tmp = document.querySelector("#temp-card");
@@ -89,13 +95,11 @@ const filterProducts = async () => {
             checkedCategory.push(category[i].id)
     }
     document.getElementById("ProductList").replaceChildren([])
-    products = await ShowProduct(name, minPrice, maxPrice, checkedCategory)  
+    await ShowProduct(name, minPrice, maxPrice, checkedCategory)  
 }
 
-let numOfProduct = 0;
 const addToCart = (product) => {
     cart.push(product)
+    document.getElementById("ItemsCountText").innerHTML++;
     sessionStorage.setItem(`cart`, JSON.stringify(cart));
-    //sessionStorage.setItem(`product${numOfProduct}`, JSON.stringify(product));
-    numOfProduct++;
 }

@@ -20,5 +20,10 @@ namespace Service
         {
             return await _orderRepository.createNewOrder(order);
         }
+
+        public async Task<Order> GetOrderById(int id)
+        {
+            return await _orderRepository.getOrderById(id);
+        }
     }
 }

@@ -1,6 +1,6 @@
 const products = []
-let itemCount = 0//document.getElementById("itemCount").value;
-let totalAmount = 0//document.getElementById("totalAmount").value;
+let itemCount = 0;
+let totalAmount = 0;
 
 const getProductInCart = async () => {    
     if (sessionStorage.getItem(`cart`) != null) {
@@ -41,7 +41,6 @@ const deleteProduct = (prod) => {
                 cart.push(products[i])
         }
     }
-    //cart = products.filter(p => p.productId != prod.productId)
     const user = sessionStorage.getItem("user")
     sessionStorage.clear();
     sessionStorage.setItem("cart", JSON.stringify(cart))
@@ -90,7 +89,8 @@ const placeOrder = async() => {
             alert("Sorry, your order isn't created, Try again")
         else {
             const res2 = await res.json()
-            //alert(`user ${order.UserId} added order successfully`)
+            alert(`user ${order.UserId} added order successfully, in all for payment is ${res2.totalAmount}`)
+            //alert(`סך הכל לתשלום ${res2.totalAmount}`)
             window.location.href = "order.html"
         }
     }

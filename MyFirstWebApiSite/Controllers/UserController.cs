@@ -1,10 +1,10 @@
-﻿using Entities;
+﻿using AutoMapper;
+using DTO;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
 using Service;
 using System.Text.Json;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyFirstWebApiSite.Controllers
 {
@@ -12,24 +12,15 @@ namespace MyFirstWebApiSite.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        IMapper _mapper;
         IUserService _userService;
-        public UserController(IUserService userService)
+        public UserController(IMapper mapper, IUserService userService)
         {
+            _mapper = mapper;
             _userService = userService;
         }
 
-        // GET: api/<UserController>
-        [HttpGet]
-        public async Task<User> Get( [FromQuery] string UserName, [FromQuery] int Password)
-        {
-            //User user = await _userService.getUserByUserNameAndPass(userName, Password);
-            //if (user == null)
-            //    return NoContent();
-            //return Ok(user);
-            return await _userService.getUserByUserNameAndPass(UserName, Password);
-        }
-
-        // GET api/<UserController>/5
+        // GET api/<UserController>/5//
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
@@ -39,17 +30,34 @@ namespace MyFirstWebApiSite.Controllers
             return Ok(user);
         }
 
+        [Route("login")]
+        [HttpPost]
+        public async Task<ActionResult<User>> Post( [FromBody] userLoginDTO userLogin)
+        {
+            User userParse = _mapper.Map<userLoginDTO, User>(userLogin);
+            User user = await _userService.getUserByUserNameAndPass(userParse.Email, userParse.Password);
+            if (user != null)
+            {
+                userDTO userSave = _mapper.Map<User, userDTO>(user);
+                return CreatedAtAction(nameof(Get), new { id = userSave.UserId}, userSave);
+            }
+            return NoContent();
+        }
+      
         // POST api/<UserController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] User user)
+        public async Task<ActionResult> Post([FromBody] userDTO user)
         {
             try
             {
-                User newUser = await _userService.addUser(user);
+                //int pass = Convert.ToInt32(user.Password);
+                //user.Password = pass;
+                User userParse = _mapper.Map<userDTO, User>(user);
+                User newUser = await _userService.addUser(userParse);
                 if (newUser == null)
                     return BadRequest();
-                return Ok(newUser);
-                //return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
+                userDTO newUserSave = _mapper.Map<User, userDTO>(newUser);
+                return CreatedAtAction(nameof(Get), new { id = newUserSave.UserId }, newUserSave);
             }
             catch(Exception e){
                 throw e;
@@ -57,7 +65,8 @@ namespace MyFirstWebApiSite.Controllers
         }
 
         // POST api/<UserController>
-        [HttpPost("checkPassword")]
+        [Route("checkPassword")]
+        [HttpPost]
         public ActionResult Post([FromBody] String pass)
         {
             int res = _userService.checkStrongePassword(pass);
@@ -68,27 +77,19 @@ namespace MyFirstWebApiSite.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] User userToUpdate)
+        public async Task<ActionResult> Put(int id, [FromBody] userDTO userToUpdate)
         {
             try
             {
-                //User userUpdated = 
-                    await _userService.update(id, userToUpdate);
-                //if (userToUpdate == null)
-                //    return BadRequest();
-                //return Ok(userUpdated);
-                //return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUser);
+                User userParse = _mapper.Map<userDTO, User>(userToUpdate);
+                User userUpdated = await _userService.update(id, userParse);
+                if (userToUpdate == null)
+                    return BadRequest();
+                return Ok(userUpdated);
             }
             catch (Exception e){
                 throw e;
             }
-        }
-
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-
         }
     }
 }

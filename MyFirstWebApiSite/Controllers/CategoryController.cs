@@ -1,6 +1,9 @@
-﻿using Entities;
+﻿using AutoMapper;
+using DTO;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Service;
+using System.Collections.Generic;
 
 namespace MyFirstWebApiSite.Controllers
 {
@@ -10,16 +13,21 @@ namespace MyFirstWebApiSite.Controllers
     {
 
         ICategoryService _categoryService;
-        public CategoryController(ICategoryService categoryService)
+        IMapper _mapper;
+
+        public CategoryController(ICategoryService categoryService, IMapper mapper)
         {
             _categoryService = categoryService;
+            _mapper = mapper;
         }
 
         // GET: api/<CategoryController>
         [HttpGet]        
-        public async Task<List<Category>> Get()
+        public async Task<ActionResult<List<Category>>> Get()
         {
-           return await _categoryService.GetCategory();            
+            List<Category> categories = await _categoryService.GetCategory();
+            List<categoryDTO> categoryDTOs = _mapper.Map<List<Category>, List<categoryDTO>>(categories);
+            return Ok(categoryDTOs);
         }
 
     }

@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using NLog.Web;
 using Repository;
 using Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//public IConfiguration
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -18,7 +21,11 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<MyStore20234Context>(option => option.UseSqlServer("Server=srv2\\pupils;Database=MyStore2023-4;Trusted_Connection=True;TrustServerCertificate=True"));
+builder.Host.UseNLog();
+
+builder.Services.AddDbContext<MyStore20234Context>(option => option.UseSqlServer(builder.Configuration["ConnectionString"]));
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyFirstWebApiSite;
+using MyFirstWebApiSite.Middlewares;
 using NLog.Web;
 using Repository;
 using Service;
@@ -18,6 +19,8 @@ builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IProductrepository, Productrepository>();
 builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IRaitingRepository, RaitingRepository>();
+builder.Services.AddTransient<IRaitingService, RaitigService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -28,6 +31,7 @@ builder.Services.AddDbContext<MyStore20234Context>(option => option.UseSqlServer
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -35,6 +39,10 @@ if (app.Environment.IsDevelopment())
 }
 
 // Configure the HTTP request pipeline.
+
+app.UseErrorHandlingMiddleware();
+
+app.UseRatingMiddleware();
 
 app.UseHttpsRedirection();
 

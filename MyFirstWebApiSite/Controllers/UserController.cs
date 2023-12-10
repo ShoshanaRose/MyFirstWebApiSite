@@ -2,9 +2,7 @@
 using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
-using Repository;
 using Service;
-using System.Text.Json;
 
 namespace MyFirstWebApiSite.Controllers
 {
@@ -12,62 +10,68 @@ namespace MyFirstWebApiSite.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        IMapper _mapper;
-        IUserService _userService;
-        public UserController(IMapper mapper, IUserService userService)
+        private readonly IMapper _mapper;
+        private readonly IUserService _userService;
+        ILogger<UserController> _logger;
+
+        public UserController(IMapper mapper, IUserService userService, ILogger<UserController> logger)
         {
             _mapper = mapper;
             _userService = userService;
+            _logger = logger;
         }
 
         // GET api/<UserController>/5//
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult<userDTO>> Get(int id)
         {
             User user = await _userService.getUserById(id);
             if (user == null)
                 return NoContent();
-            return Ok(user);
+            userDTO userDTO = _mapper.Map<User, userDTO>(user);
+            return Ok(userDTO);
         }
 
         [Route("login")]
         [HttpPost]
-        public async Task<ActionResult<User>> Post( [FromBody] userLoginDTO userLogin)
+        public async Task<ActionResult<userSaveDTO>> Post( [FromBody] userLoginDTO userLogin)
         {
             User userParse = _mapper.Map<userLoginDTO, User>(userLogin);
             User user = await _userService.getUserByUserNameAndPass(userParse.Email, userParse.Password);
             if (user != null)
             {
-                userDTO userSave = _mapper.Map<User, userDTO>(user);
-                return CreatedAtAction(nameof(Get), new { id = userSave.UserId}, userSave);
+                userSaveDTO userSave = _mapper.Map<User, userSaveDTO>(user);
+                _logger.LogInformation("user {0} connect", userParse.Email);
+                return CreatedAtAction(nameof(Get), new { id = user.UserId}, userSave);
             }
             return NoContent();
         }
       
         // POST api/<UserController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] userDTO user)
+        public async Task<ActionResult<userDTO>> Post([FromBody] userDTO user)
         {
-            try
-            {
-                //int pass = Convert.ToInt32(user.Password);
-                //user.Password = pass;
-                User userParse = _mapper.Map<userDTO, User>(user);
-                User newUser = await _userService.addUser(userParse);
-                if (newUser == null)
-                    return BadRequest();
-                userDTO newUserSave = _mapper.Map<User, userDTO>(newUser);
-                return CreatedAtAction(nameof(Get), new { id = newUserSave.UserId }, newUserSave);
-            }
-            catch(Exception e){
-                throw e;
-            }           
+            User userParse = _mapper.Map<userDTO, User>(user);
+            User newUser = await _userService.addUser(userParse);
+            if (newUser == null)
+                return BadRequest();
+            userDTO newUserDTO = _mapper.Map<User, userDTO>(newUser);
+            return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUserDTO);
         }
+        //public async Task<ActionResult<userDTO>> Post([FromBody] userDTO user)
+        //{      
+        //    User userParse = _mapper.Map<userDTO, User>(user);
+        //    User newUser = await _userService.addUser(userParse);
+        //    if (newUser == null)
+        //        return BadRequest();
+        //    userDTO newUserDTO = _mapper.Map<User, userDTO>(newUser);
+        //    return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUserDTO);              
+        //}
 
         // POST api/<UserController>
         [Route("checkPassword")]
         [HttpPost]
-        public ActionResult Post([FromBody] String pass)
+        public ActionResult<User> Post([FromBody] string pass)
         {
             int res = _userService.checkStrongePassword(pass);
             if (res >= 2)

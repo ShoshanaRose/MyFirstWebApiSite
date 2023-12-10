@@ -3,9 +3,9 @@ using Repository;
 
 namespace Service
 {
-    public class UserService:IUserService
+    public class UserService : IUserService
     {
-        private IUserRepository _userRepository ;
+        private IUserRepository _userRepository;
         public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -34,7 +34,7 @@ namespace Service
         public int checkStrongePassword(string pass)
         {
             var result = Zxcvbn.Core.EvaluatePassword(pass);
-            return  result.Score;
+            return result.Score;
         }
 
     }

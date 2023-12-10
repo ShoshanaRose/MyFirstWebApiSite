@@ -4,10 +4,10 @@ using MyFirstWebApiSite;
 
 namespace Repository
 {
-    public class OrderRepository: IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private MyStore20234Context _myStore20234Context;
-        public OrderRepository (MyStore20234Context myStore20234Context)
+        public OrderRepository(MyStore20234Context myStore20234Context)
         {
             _myStore20234Context = myStore20234Context;
         }

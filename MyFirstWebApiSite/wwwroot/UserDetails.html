@@ -3,26 +3,25 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <script src="/scripts/UserDetails.js"></script>
     <link rel="stylesheet" href="./style/Style.css" />
-    <script src="login.js"></script>
 </head>
 <body>
     <form dir="rtl">
         <!--<h1>` התחברת בהצלחה, מיד נצלול פנימה ${username}שלום `</h1>-->
         <h1>  שלום התחברת בהצלחה, מיד נצלול פנימה</h1>
-        <a onclick="viewUpdate()">לעדכון פרטים</a><br/>
+        <a onclick="viewUpdate()">לעדכון פרטים</a><br />
         <a onclick="viewProduct()">הצגת מוצרים</a>
 
         <div id="update">
             <label>שם משתמש</label> <input type="text" id="usernameUpdate" /><br /><br /><br />
-            <label>סיסמא</label> <input type="password" id="passwordUpdate" /><br /><br /><br />
+            <label>סיסמא</label><input type="password" id="passwordUpdate" onblur="checkStrong()" />
+                <progress id="progress" value="0" max="4"></progress><div id="value"></div><br /><br />
             <label>שם פרטי</label> <input type="text" id="firstnameUpdate" /><br /><br /><br />
             <label>שם משפחה</label> <input type="text" id="lastnameUpdate" /><br /><br /><br />
             <label>כתובת מייל</label> <input type="text" id="email" /><br /><br /><br />
             <button onclick="update()">עדכן</button>
         </div>
-
     </form>
-    
 </body>
 </html>

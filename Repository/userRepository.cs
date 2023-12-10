@@ -4,7 +4,7 @@ using MyFirstWebApiSite;
 
 namespace Repository
 {
-    public class userRepository: IUserRepository
+    public class userRepository : IUserRepository
     {
         private const string filePath = "M:/WEB API/MyFirstWebApiSite/users.txt";
 
@@ -37,6 +37,6 @@ namespace Repository
             _myStore20234Context.Users.Update(userToUpdate);
             await _myStore20234Context.SaveChangesAsync();
             return userToUpdate;
-        }       
+        }
     }
 }

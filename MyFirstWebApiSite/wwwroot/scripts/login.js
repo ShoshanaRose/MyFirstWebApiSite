@@ -3,6 +3,15 @@
     registerUser.style.visibility = "initial"
 }
 
+const viewUpdate = () => {
+    const view = document.getElementById("update");
+    view.style.visibility = "initial";
+}
+
+const viewProduct = () => {
+    window.location.href = "Products.html"
+}
+
 const login = async () => {
     const userDTO = {
         Email: document.getElementById("usernameLogin").value,
@@ -39,7 +48,7 @@ const register = async () => {
 
     const user = {
         UserName: document.getElementById("usernameRegister").value,
-        Password: document.getElementById("passwordRegister").value,
+        Password: document.getElementById("password").value,
         Firstname: document.getElementById("firstname").value,
         Lastname: document.getElementById("lastname").value
     }
@@ -66,8 +75,8 @@ const register = async () => {
 }
 
 const checkStrong = async () => {
-    const pass = document.getElementById("passwordRegister").value
-    const progress = document.getElementById("progress")
+    let pass = document.getElementById("password").value
+    let progress = document.getElementById("progress")
     try {
         const res = await fetch('api/User/checkPassword', {
             method: 'POST',
@@ -92,10 +101,49 @@ const checkStrong = async () => {
         }
         else {
             alert("הסיסמא שלך חזקה!!! אפשר להמשיך")
-            return 2;
+            return 3;
         }
     }
     catch (e) {
         alert(e)
+    }
+}
+
+const update = async () => {
+    const user = {
+        UserId: 0,
+        Email: document.getElementById("usernameUpdate").value,
+        Password: document.getElementById("password").value,
+        Firstname: document.getElementById("firstnameUpdate").value,
+        Lastname: document.getElementById("lastnameUpdate").value
+    }
+    const checkPass = await checkStrong()
+    if (checkPass < 2) {
+        return alert("Please enter strong password!");
+    }
+
+    try {
+        const userJson = sessionStorage.getItem("user")
+        user.UserId = JSON.parse(userJson).userId
+        const res = await fetch(`api/User/${user.UserId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        })
+        console.log(res)
+        if (res.status == 400)
+            alert("משהו השתבש, נסה שנית")
+        else {
+            sessionStorage.setItem("user", JSON.stringify(user))
+            let userString = sessionStorage.getItem("user")
+            let cu = JSON.parse(userString)
+
+            alert(`user ${cu.userName} was updated`)
+            alert(" הפרטים עודכנו בהצלחה")
+            window.location.href = './home.html';
+        }
+    }
+    catch (e) {
+        console.log(e)
     }
 }

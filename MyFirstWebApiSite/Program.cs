@@ -26,7 +26,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Host.UseNLog();
 
-builder.Services.AddDbContext<MyStore20234Context>(option => option.UseSqlServer(builder.Configuration["ConnectionString"]));
+builder.Services.AddDbContext<MyshopWebApiContext>(option => option.UseSqlServer(builder.Configuration["ConnectionString"]));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

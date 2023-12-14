@@ -49,7 +49,7 @@ namespace MyFirstWebApiSite.Controllers
       
         // POST api/<UserController>
         [HttpPost]
-        public async Task<ActionResult<userDTO>> Post([FromBody] userDTO user)
+        public async Task<ActionResult<userDTO>> Post ([FromBody] userDTO user)
         {
             User userParse = _mapper.Map<userDTO, User>(user);
             User newUser = await _userService.addUser(userParse);
@@ -58,15 +58,6 @@ namespace MyFirstWebApiSite.Controllers
             userDTO newUserDTO = _mapper.Map<User, userDTO>(newUser);
             return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUserDTO);
         }
-        //public async Task<ActionResult<userDTO>> Post([FromBody] userDTO user)
-        //{      
-        //    User userParse = _mapper.Map<userDTO, User>(user);
-        //    User newUser = await _userService.addUser(userParse);
-        //    if (newUser == null)
-        //        return BadRequest();
-        //    userDTO newUserDTO = _mapper.Map<User, userDTO>(newUser);
-        //    return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUserDTO);              
-        //}
 
         // POST api/<UserController>
         [Route("checkPassword")]
@@ -87,7 +78,7 @@ namespace MyFirstWebApiSite.Controllers
             {
                 User userParse = _mapper.Map<userDTO, User>(userToUpdate);
                 User userUpdated = await _userService.update(id, userParse);
-                if (userToUpdate == null)
+                if (userUpdated == null)
                     return BadRequest();
                 return Ok(userUpdated);
             }

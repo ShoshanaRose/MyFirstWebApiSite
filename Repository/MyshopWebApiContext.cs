@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace MyFirstWebApiSite;
+namespace Repository;
 
-public partial class MyStore20234Context : DbContext
+public partial class MyshopWebApiContext : DbContext
 {
-    public MyStore20234Context()
+    public MyshopWebApiContext()
     {
     }
 
-    public MyStore20234Context(DbContextOptions<MyStore20234Context> options)
+    public MyshopWebApiContext(DbContextOptions<MyshopWebApiContext> options)
         : base(options)
     {
     }
@@ -30,7 +30,7 @@ public partial class MyStore20234Context : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=srv2\\pupils;Database=MyStore2023-4;Trusted_Connection=True;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=srv2\\pupils;Database=MYSHOP_webApi;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -50,12 +50,16 @@ public partial class MyStore20234Context : DbContext
         {
             entity.ToTable("ORDERS");
 
-            entity.Property(e => e.OrderId).HasColumnName("ORDER_ID");
+            entity.Property(e => e.OrderId)
+                .ValueGeneratedNever()
+                .HasColumnName("ORDER_ID");
             entity.Property(e => e.OrderDate)
                 .HasColumnType("date")
                 .HasColumnName("ORDER_DATE");
             entity.Property(e => e.OrderSum).HasColumnName("ORDER_SUM");
-            entity.Property(e => e.UserId).HasColumnName("USER_ID");
+            entity.Property(e => e.UserId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("USER_ID");
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
@@ -70,7 +74,7 @@ public partial class MyStore20234Context : DbContext
             entity.Property(e => e.OrderItemId).HasColumnName("ORDER_ITEM_ID");
             entity.Property(e => e.OrderId).HasColumnName("ORDER_ID");
             entity.Property(e => e.ProductId).HasColumnName("PRODUCT_ID");
-            entity.Property(e => e.Quantity).HasColumnName("QUANTITY");
+            entity.Property(e => e.Quentity).HasColumnName("QUENTITY");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
@@ -95,7 +99,7 @@ public partial class MyStore20234Context : DbContext
                 .IsFixedLength()
                 .HasColumnName("DESCRIPTION");
             entity.Property(e => e.Image)
-                .HasMaxLength(50)
+                .HasMaxLength(20)
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("IMAGE");
@@ -109,7 +113,7 @@ public partial class MyStore20234Context : DbContext
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PRODUCTS_CATEGORIES");
+                .HasConstraintName("FK_PRODUCTS_PRODUCTS");
         });
 
         modelBuilder.Entity<Rating>(entity =>
@@ -143,20 +147,20 @@ public partial class MyStore20234Context : DbContext
             entity.Property(e => e.UserId).HasColumnName("USER_ID");
             entity.Property(e => e.Email)
                 .HasMaxLength(30)
-                .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("EMAIL");
             entity.Property(e => e.FirstName)
-                .HasMaxLength(25)
-                .IsUnicode(false)
+                .HasMaxLength(30)
                 .IsFixedLength()
                 .HasColumnName("FIRST_NAME");
             entity.Property(e => e.LastName)
                 .HasMaxLength(15)
-                .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("LAST_NAME");
-            entity.Property(e => e.Password).HasColumnName("PASSWORD");
+            entity.Property(e => e.Password)
+                .HasMaxLength(20)
+                .IsFixedLength()
+                .HasColumnName("PASSWORD");
         });
 
         OnModelCreatingPartial(modelBuilder);

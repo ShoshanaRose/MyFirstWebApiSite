@@ -1,13 +1,12 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
-using MyFirstWebApiSite;
 
 namespace Repository
 {
     public class Productrepository : IProductrepository
     {
-        private MyStore20234Context _myStore20234Context;
-        public Productrepository(MyStore20234Context myStore20234Context)
+        private MyshopWebApiContext _myStore20234Context;
+        public Productrepository(MyshopWebApiContext myStore20234Context)
         {
             _myStore20234Context = myStore20234Context;
         }

@@ -11,7 +11,7 @@ namespace Service
             _userRepository = userRepository;
         }
 
-        public async Task<User> getUserByUserNameAndPass(string userName, int pass)
+        public async Task<User> getUserByUserNameAndPass(string userName, string pass)
         {
             return await _userRepository.getUserByUserNameAndPass(userName, pass);
         }

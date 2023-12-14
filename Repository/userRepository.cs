@@ -1,6 +1,5 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
-using MyFirstWebApiSite;
 
 namespace Repository
 {
@@ -8,13 +7,13 @@ namespace Repository
     {
         private const string filePath = "M:/WEB API/MyFirstWebApiSite/users.txt";
 
-        private MyStore20234Context _myStore20234Context;
-        public userRepository(MyStore20234Context myStore20234Context)
+        private MyshopWebApiContext _myStore20234Context;
+        public userRepository(MyshopWebApiContext myStore20234Context)
         {
             _myStore20234Context = myStore20234Context;
         }
 
-        public async Task<User> getUserByUserNameAndPass(string UserName, int Password)
+        public async Task<User> getUserByUserNameAndPass(string UserName, string Password)
         {
             return await _myStore20234Context.Users.Where(p => p.Email == UserName && p.Password == Password).FirstOrDefaultAsync();
         }

@@ -40,7 +40,6 @@ const login = async () => {
 }
 
 const register = async () => {
-
     let fName = document.getElementById("firstname").value
     if (fName.length > 15) {
         alert("First Name is too long");
@@ -57,9 +56,9 @@ const register = async () => {
         return alert("להמשך הרישום יש להכניס סיסמא חזקה")
     }
     try {
-        const newuserFetch = await fetch(`api/User`, {
+        const newuserFetch = await fetch('api/User', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { "Content-Type": 'application/json' },
             body: JSON.stringify(user)
         });
         if (!newuserFetch.ok)

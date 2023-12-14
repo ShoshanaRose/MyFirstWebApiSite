@@ -80,7 +80,7 @@ const placeOrder = async () => {
     }
 
     try {
-        const res = await fetch(`api/Order`, {
+        const res = await fetch('api/Order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(order)

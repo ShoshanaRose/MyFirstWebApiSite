@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 using DTO;
@@ -23,18 +22,18 @@ namespace MyFirstWebApiSite.Controllers
         [HttpPost]
         public async Task<ActionResult<Order>> Post([FromBody] orderDTO order)
         {
-            try
-            {
+            //try
+            //{
                 Order orderParse = _mapper.Map<orderDTO, Order>(order);
                 Order newOrder = await _orderService.createNewOrder(orderParse);
                 if (newOrder == null)
                     return BadRequest();
                 orderDTO orderDto = _mapper.Map<Order, orderDTO>(newOrder);
                 return CreatedAtAction(nameof(Get), new { id = newOrder.OrderId }, orderDto);
-            }
-            catch (Exception e) {
-                throw e;
-            }
+            //}
+            //catch (Exception e) {
+            //    throw e;
+            //}
         }
 
         [HttpGet]

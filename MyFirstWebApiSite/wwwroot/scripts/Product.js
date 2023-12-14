@@ -43,8 +43,9 @@ const getCategory = async () => {
 
 const ShowProduct = async (name, minPrice, maxPrice, checkedCategory) => {
     const product = await getProduct(name, minPrice, maxPrice, checkedCategory)
-    let cartSession = JSON.parse(sessionStorage.getItem("cart"));
-    if (cartSession != null) {
+    //let cartSession = JSON.parse(sessionStorage.getItem("cart"));
+    if (JSON.parse(sessionStorage.getItem("cart")) != null) {
+        let cartSession = JSON.parse(sessionStorage.getItem("cart"));
         sessionStorage.setItem("cart", [])
         document.getElementById("ItemsCountText").innerHTML = cartSession.length;
         for (let c = 0; c < cartSession.length; c++) {

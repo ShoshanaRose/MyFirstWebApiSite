@@ -7,34 +7,34 @@ namespace Repository
     {
         private const string filePath = "M:/WEB API/MyFirstWebApiSite/users.txt";
 
-        private MyshopWebApiContext _myStore20234Context;
-        public userRepository(MyshopWebApiContext myStore20234Context)
+        private MyshopWebApiContext _myshopWebApiContext;
+        public userRepository(MyshopWebApiContext myshopWebApiContext)
         {
-            _myStore20234Context = myStore20234Context;
+            _myshopWebApiContext = myshopWebApiContext;
         }
 
         public async Task<User> getUserByUserNameAndPass(string UserName, string Password)
         {
-            return await _myStore20234Context.Users.Where(p => p.Email == UserName && p.Password == Password).FirstOrDefaultAsync();
+            return await _myshopWebApiContext.Users.Where(p => p.Email == UserName && p.Password == Password).FirstOrDefaultAsync();
         }
 
         public async Task<User> getUserById(int id)
         {
-            return await _myStore20234Context.Users.Where(p => p.UserId == id).FirstOrDefaultAsync();
+            return await _myshopWebApiContext.Users.Where(p => p.UserId == id).FirstOrDefaultAsync();
         }
 
         public async Task<User> addUser(User user)
         {
-            await _myStore20234Context.Users.AddAsync(user);
-            await _myStore20234Context.SaveChangesAsync();
+            await _myshopWebApiContext.Users.AddAsync(user);
+            await _myshopWebApiContext.SaveChangesAsync();
             return user;
         }
 
         public async Task<User> update(int id, User userToUpdate)
         {
             userToUpdate.UserId = id;//????
-            _myStore20234Context.Users.Update(userToUpdate);
-            await _myStore20234Context.SaveChangesAsync();
+            _myshopWebApiContext.Users.Update(userToUpdate);
+            await _myshopWebApiContext.SaveChangesAsync();
             return userToUpdate;
         }
     }

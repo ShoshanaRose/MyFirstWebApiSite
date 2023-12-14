@@ -49,7 +49,7 @@ namespace MyFirstWebApiSite.Controllers
       
         // POST api/<UserController>
         [HttpPost]
-        public async Task<ActionResult<userDTO>> Post ([FromBody] userDTO user)
+        public async Task<ActionResult<userDTO>> Post([FromBody] userDTO user)
         {
             User userParse = _mapper.Map<userDTO, User>(user);
             User newUser = await _userService.addUser(userParse);

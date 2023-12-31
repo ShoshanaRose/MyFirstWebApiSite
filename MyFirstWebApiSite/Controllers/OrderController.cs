@@ -19,6 +19,13 @@ namespace MyFirstWebApiSite.Controllers
         }
 
         [HttpPost]
+        public async Task<ActionResult<orderDTO>> Post([FromBody] orderDTO orderDTO)
+        {
+            Order OrderParse = _mapper.Map<orderDTO, Order>(orderDTO);
+            Order newOrder = await _orderService.createNewOrderAsync(OrderParse);
+            orderDTO newOrderDTO = _mapper.Map<Order, orderDTO>(newOrder);
+            return newOrder != null ? CreatedAtAction(nameof(Get), new { id = newOrder.OrderId }, newOrderDTO) : NoContent();
+        }
         //public async Task<ActionResult<Order>> Post([FromBody] orderDTO order)
         //{
         //    try
@@ -35,15 +42,9 @@ namespace MyFirstWebApiSite.Controllers
         //    }
         //}
 
-        public async Task<ActionResult<orderDTO>> Post([FromBody] orderDTO orderDTO)
-        {
-            Order OrderParse = _mapper.Map<orderDTO, Order>(orderDTO);
-            Order newOrder = await _orderService.createNewOrderAsync(OrderParse);
-            orderDTO newOrderDTO = _mapper.Map<Order, orderDTO>(newOrder);
-            return newOrder != null ? CreatedAtAction(nameof(Get), new { id = newOrder.OrderId }, newOrderDTO) : NoContent();
-        }
 
-        [HttpGet]
+
+        [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Order>>> Get(int id)
         {
             Order order = await _orderService.GetOrderByIdAsync(id);

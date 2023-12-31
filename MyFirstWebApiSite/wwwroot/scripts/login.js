@@ -52,7 +52,8 @@ const register = async () => {
         Lastname: document.getElementById("lastname").value
     }
     const check = await checkStrong()
-    if (check == 0) {
+    //if (check == 0) {
+    if (!check) { 
         return alert("להמשך הרישום יש להכניס סיסמא חזקה")
     }
     try {
@@ -117,12 +118,12 @@ const checkStrong = async () => {
 
     try {
         const res = await fetch('api/User/checkPassword',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(strongPass)
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(strongPass)
 
-            })
+        })
         if (!res.ok)
             return false;
 

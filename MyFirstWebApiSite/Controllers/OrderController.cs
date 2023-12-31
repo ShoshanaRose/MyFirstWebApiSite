@@ -18,7 +18,6 @@ namespace MyFirstWebApiSite.Controllers
             _orderService = orderService;
         }
 
-        // POST: OrderController/Create
         [HttpPost]
         //public async Task<ActionResult<Order>> Post([FromBody] orderDTO order)
         //{

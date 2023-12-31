@@ -11,9 +11,9 @@ namespace Service
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<List<Category>> GetCategory()
+        public async Task<List<Category>> GetCategoryAsync()
         {
-            return await _categoryRepository.getCategory();
+            return await _categoryRepository.getCategoryAsync();
         }
     }
 }

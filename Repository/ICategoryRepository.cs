@@ -4,6 +4,6 @@ namespace Repository
 {
     public interface ICategoryRepository
     {
-        Task<List<Category>> getCategory();
+        Task<List<Category>> getCategoryAsync();
     }
 }

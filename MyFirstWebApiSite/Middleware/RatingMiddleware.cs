@@ -27,7 +27,7 @@ namespace MyFirstWebApiSite.Middlewares
                     UserAgent = httpContext.Request.Headers.UserAgent,
                     RecordDate = DateTime.Now
                 };
-                await ratingService.addRating(rating);
+                await ratingService.addRatingAsync(rating);
                 await _next(httpContext);
             //}
            // catch (Exception e)

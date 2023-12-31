@@ -23,7 +23,7 @@ namespace MyFirstWebApiSite.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Product>>> Get(string? name, int? minPrice, int? maxPrice, [FromQuery]int?[] categoryIds)
         {
-            List<Product> products = await _ProductService.getAllProducts(name, minPrice, maxPrice, categoryIds);
+            List<Product> products = await _ProductService.getAllProductsAsync(name, minPrice, maxPrice, categoryIds);
             List<productDTO> productsDTO = _mapper.Map<List<Product>, List<productDTO>>(products);
             return Ok(productsDTO);
         }

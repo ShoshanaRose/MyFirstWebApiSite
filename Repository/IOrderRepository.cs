@@ -4,7 +4,7 @@ namespace Repository
 {
     public interface IOrderRepository
     {
-        Task<Order> createNewOrder(Order order);
-        Task<Order> getOrderById(int id);
+        Task<Order> createNewOrderAsync(Order order);
+        Task<Order> getOrderByIdAsync(int id);
     }
 }

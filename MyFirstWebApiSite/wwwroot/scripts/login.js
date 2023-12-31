@@ -73,39 +73,79 @@ const register = async () => {
     }
 }
 
+//const checkStrong = async () => {
+//    let password = document.getElementById("password").value
+//    let progress = document.getElementById("progress")
+//    try {
+//        const res = await fetch('api/User/checkPassword', {
+//            method: 'POST',
+//            headers: { 'Content-Type': 'application/json' },
+//            body: JSON.stringify(password)
+//        })
+//        if (res.status == 204) {
+//            alert("אירעה שגיאה, נסה שנית");
+//            return 0;
+//        }
+//        if (res.status == 400) {
+//            alert("נסה סיסמא אחרת");
+//            return 0;
+//        }
+
+//        const score = await res.json()
+//        progress.value = score;
+//        console.log(score)
+//        if (score < 2) {
+//            alert(`הסיסמה קלה מדי, אנא הכנס סיסמא אחרת `)
+//            return 0;
+//        }
+//        else {
+//            alert("הסיסמא שלך חזקה!!! אפשר להמשיך")
+//            return 3;
+//        }
+//    }
+//    catch (e) {
+//        alert(e)
+//    }
+//}
+
+
+
 const checkStrong = async () => {
-    let pass = document.getElementById("password").value
-    let progress = document.getElementById("progress")
+
+    const strongPass = document.getElementById("password").value
+    const progressValue = document.getElementById("progress")
+
     try {
-        const res = await fetch('api/User/checkPassword', {
-            method: 'POST',
-            headers: { "Content-Type": 'application/json' },
-            body: JSON.stringify(pass)
-        })
-        if (res.status == 204) {
-            alert("אירעה שגיאה, נסה שנית");
-            return 0;
-        }
-        if (res.status == 400) {
-            alert("נסה סיסמא אחרת");
-            return 0;
-        }
+        const res = await fetch('api/User/checkPassword',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(strongPass)
+
+            })
+        if (!res.ok)
+            return false;
 
         const score = await res.json()
-        progress.value = score;
-        console.log(score)
-        if (score < 2) {
-            alert(`הסיסמה קלה מדי, אנא הכנס סיסמא אחרת `)
-            return 0;
+        if (progressValue != null)
+            progressValue.value = score;
+
+        if (score >= 2) {
+            return true;
         }
         else {
-            alert("הסיסמא שלך חזקה!!! אפשר להמשיך")
-            return 3;
+            alert("Easy password... Enter a new one!")
+            return false;
         }
+
     }
-    catch (e) {
-        alert(e)
+    catch (err) {
+        throw err;
     }
+}
+
+const goShopping = () => {
+    window.location.href = "Products.html"
 }
 
 const update = async () => {
@@ -116,33 +156,62 @@ const update = async () => {
         Firstname: document.getElementById("firstnameUpdate").value,
         Lastname: document.getElementById("lastnameUpdate").value
     }
-    const checkPass = await checkStrong()
-    if (checkPass < 2) {
+    ////const checkPass = await checkStrong()
+    ////if (checkPass < 2) {
+    ////    return alert("Please enter strong password!");
+    ////}
+
+    //try {
+    //    //const userJson = sessionStorage.getItem("user")
+    //    //user.UserId = JSON.parse(userJson).UserId
+    //    const res = await fetch(`api/User/4`, {
+    //        method: 'PUT',
+    //        headers: { 'Content-Type': 'application/json' },
+    //        body: JSON.stringify(user)
+    //    })
+    //    console.log(res)
+    //    if (res.status == 400)
+    //        alert("משהו השתבש, נסה שנית")
+    //    else {
+    //        sessionStorage.setItem("user", JSON.stringify(user))
+    //        let userString = sessionStorage.getItem("user")
+    //        let cu = JSON.parse(userString)
+
+    //        alert(`user ${cu.userName} was updated`)
+    //        alert(" הפרטים עודכנו בהצלחה")
+    //        window.location.href = './home.html';
+    //    }
+    //}
+    //catch (e) {
+    //    console.log(e)
+    //}
+
+
+    const checkIfStrong = await checkStrong()
+
+    if (!checkIfStrong) {
         return alert("Please enter strong password!");
     }
 
     try {
         const userJson = sessionStorage.getItem("user")
-        user.UserId = JSON.parse(userJson).userId
-        const res = await fetch(`api/User/${user.UserId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user)
-        })
-        console.log(res)
-        if (res.status == 400)
-            alert("משהו השתבש, נסה שנית")
+        console.log(userJson);
+        const id = JSON.parse(userJson).userId
+        user.UserId = id;
+        const res = await fetch(`api/Users/${id}`,
+            {
+                method: 'PUT',
+                headers: { 'Content-Type': `application/json` },
+                body: JSON.stringify(user)
+            })
+        if (!res.ok)
+            alert("error updated to the server,please try again!")
         else {
-            sessionStorage.setItem("user", JSON.stringify(user))
-            let userString = sessionStorage.getItem("user")
-            let cu = JSON.parse(userString)
 
-            alert(`user ${cu.userName} was updated`)
-            alert(" הפרטים עודכנו בהצלחה")
-            window.location.href = './home.html';
+            alert(`user ${id} updated succfully`)
         }
-    }
-    catch (e) {
-        console.log(e)
+
+    } catch (e) {
+        alert(e)
     }
 }

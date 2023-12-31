@@ -3,7 +3,6 @@ using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Service;
-using System.Collections.Generic;
 
 namespace MyFirstWebApiSite.Controllers
 {
@@ -25,7 +24,7 @@ namespace MyFirstWebApiSite.Controllers
         [HttpGet]        
         public async Task<ActionResult<List<Category>>> Get()
         {
-            List<Category> categories = await _categoryService.GetCategory();
+            List<Category> categories = await _categoryService.GetCategoryAsync();
             List<categoryDTO> categoryDTOs = _mapper.Map<List<Category>, List<categoryDTO>>(categories);
             return Ok(categoryDTOs);
         }

@@ -11,7 +11,7 @@ namespace Repository
             _myStore20234Context = myStore20234Context;
         }
 
-        public async Task<List<Product>> getAllProducts(string? name, int? minPrice, int? maxPrice, int?[] categoryIds)
+        public async Task<List<Product>> getAllProductsAsync(string? name, int? minPrice, int? maxPrice, int?[] categoryIds)
         {
             var query = _myStore20234Context.Products.Where(p =>
             (name == null ? (true) : (p.ProductName.Contains(name)))
@@ -20,11 +20,10 @@ namespace Repository
             && ((categoryIds.Length == 0) ? (true) : (categoryIds.Contains(p.CategoryId))))
                 .Include(i => i.Category)
                 .OrderBy(p => p.Price);
-            Console.WriteLine(query.ToQueryString());
             List<Product> products = await query.ToListAsync();
             return products;
         }
-        public async Task<List<Product>> getAllProducts()
+        public async Task<List<Product>> getAllProductsAsync()
         {
             return await _myStore20234Context.Products.ToListAsync();
         }

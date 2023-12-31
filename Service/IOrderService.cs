@@ -4,7 +4,7 @@ namespace Service
 {
     public interface IOrderService
     {
-        Task<Order> createNewOrder(Order order);
-        Task<Order> GetOrderById(int id);
+        Task<Order> createNewOrderAsync(Order order);
+        Task<Order> GetOrderByIdAsync(int id);
     }
 }

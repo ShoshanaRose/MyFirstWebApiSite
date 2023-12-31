@@ -4,6 +4,6 @@ namespace Service
 {
     public interface ICategoryService
     {
-        Task<List<Category>> GetCategory();
+        Task<List<Category>> GetCategoryAsync();
     }
 }

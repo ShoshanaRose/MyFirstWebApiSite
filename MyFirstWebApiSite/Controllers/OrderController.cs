@@ -20,26 +20,34 @@ namespace MyFirstWebApiSite.Controllers
 
         // POST: OrderController/Create
         [HttpPost]
-        public async Task<ActionResult<Order>> Post([FromBody] orderDTO order)
+        //public async Task<ActionResult<Order>> Post([FromBody] orderDTO order)
+        //{
+        //    try
+        //    {
+        //        Order orderParse = _mapper.Map<orderDTO, Order>(order);
+        //        Order newOrder = await _orderService.createNewOrderAsync(orderParse);
+        //        if (newOrder == null)
+        //            return BadRequest();
+        //        orderDTO orderDto = _mapper.Map<Order, orderDTO>(newOrder);
+        //        return CreatedAtAction(nameof(Get), new { id = newOrder.OrderId }, orderDto);
+        //    }
+        //    catch (Exception e) {
+        //        throw new Exception(e.Message);
+        //    }
+        //}
+
+        public async Task<ActionResult<orderDTO>> Post([FromBody] orderDTO orderDTO)
         {
-            //try
-            //{
-                Order orderParse = _mapper.Map<orderDTO, Order>(order);
-                Order newOrder = await _orderService.createNewOrder(orderParse);
-                if (newOrder == null)
-                    return BadRequest();
-                orderDTO orderDto = _mapper.Map<Order, orderDTO>(newOrder);
-                return CreatedAtAction(nameof(Get), new { id = newOrder.OrderId }, orderDto);
-            //}
-            //catch (Exception e) {
-            //    throw e;
-            //}
+            Order OrderParse = _mapper.Map<orderDTO, Order>(orderDTO);
+            Order newOrder = await _orderService.createNewOrderAsync(OrderParse);
+            orderDTO newOrderDTO = _mapper.Map<Order, orderDTO>(newOrder);
+            return newOrder != null ? CreatedAtAction(nameof(Get), new { id = newOrder.OrderId }, newOrderDTO) : NoContent();
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> Get(int id)
         {
-            Order order = await _orderService.GetOrderById(id);
+            Order order = await _orderService.GetOrderByIdAsync(id);
             if (order == null)
                 return NoContent();
             return Ok(order);

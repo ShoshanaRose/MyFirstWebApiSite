@@ -12,7 +12,7 @@ namespace Repository
             _MyStore20234Context = myStore20234Context;
         }
 
-        public async Task<List<Category>> getCategory()
+        public async Task<List<Category>> getCategoryAsync ()
         {
             return await _MyStore20234Context.Categories.ToListAsync();
         }

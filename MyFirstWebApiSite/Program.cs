@@ -1,5 +1,5 @@
+using Entities;
 using Microsoft.EntityFrameworkCore;
-using MyFirstWebApiSite;
 using MyFirstWebApiSite.Middlewares;
 using NLog.Web;
 using Repository;

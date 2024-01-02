@@ -53,10 +53,12 @@ namespace MyFirstWebApiSite.Controllers
         {
             User userParse = _mapper.Map<userDTO, User>(user);
             User newUser = await _userService.addUserAsync(userParse);
-            if (newUser == null)
-                return BadRequest();
-            userDTO newUserDTO = _mapper.Map<User, userDTO>(newUser);
-            return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUserDTO);
+            if (newUser != null)
+            {
+                userDTO newUserDTO = _mapper.Map<User, userDTO>(newUser);
+                return CreatedAtAction(nameof(Get), new { id = newUser.UserId }, newUserDTO);
+            }
+            return BadRequest();
         }
 
         // POST api/<UserController>
@@ -72,12 +74,12 @@ namespace MyFirstWebApiSite.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] userDTO userToUpdate)
+        public async Task<ActionResult> Put([FromBody] userDTO userToUpdate)
         {
             try
             {
                 User userParse = _mapper.Map<userDTO, User>(userToUpdate);
-                User userUpdated = await _userService.updateAsync(id, userParse);
+                User userUpdated = await _userService.updateAsync(userToUpdate.UserId, userParse);
                 if (userUpdated == null)
                     return BadRequest();
                 return Ok(userUpdated);

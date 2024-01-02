@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Repository;
+namespace Entities;
 
 public partial class MyshopWebApiContext : DbContext
 {

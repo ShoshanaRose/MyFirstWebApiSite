@@ -8,7 +8,7 @@
 </head>
 <body dir="rtl">
     <div>
-        <label>שם משתמש</label> <input type="text" id="usernameLogin" /><br /><br />
+        <label>שם משתמש/אימייל</label> <input type="text" id="usernameLogin" /><br /><br />
         <label>סיסמא</label> <input type="password" id="passwordLogin" /><br /><br />
         <button onclick="login()">התחברות</button>
         <a onclick="newU()">  ---משתמש חדש---  </a>
@@ -17,12 +17,13 @@
     <br /><br /><br />
 
     <div id="register">
-        <label>שם משתמש</label> <input type="text" id="usernameRegister" /><br /><br />
+        <label>שם משתמש/אימייל</label> <input type="text" id="usernameRegister" /><br /><br />
         <label>סיסמא</label> <input title="נא הכנס סיסמא חזקה" type="password" id="password" onblur="checkStrong()" />
         <!--<button onblur="checkStrong()">בדיקת חוזק הסיסמא</button>-->
         <progress id="progress" value="0" max="4"></progress><div id="value"></div><br /><br />
         <label>שם פרטי</label> <input type="text" id="firstname" /><br /><br />
         <label>שם משפחה</label> <input type="text" id="lastname" /><br /><br />
+        <!--<label>אימייל</label> <input type="text" id="email" /><br /><br />-->
         <button onclick="register()">רישום</button>
     </div>
 </body>
